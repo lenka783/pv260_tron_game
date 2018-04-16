@@ -1,6 +1,11 @@
 package cz.muni.pv260.tron.game;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.DisplayMode;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Window;
 import java.awt.image.BufferedImage;
 
 public abstract class Core {
@@ -60,7 +65,9 @@ public abstract class Core {
 			
 			try{
 				Thread.sleep(20);
-			}catch(Exception ex){}
+			}catch(Exception ex){
+				// TODO
+			}
 		}
 	}
 	

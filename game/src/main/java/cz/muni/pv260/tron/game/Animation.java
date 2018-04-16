@@ -2,22 +2,24 @@ package cz.muni.pv260.tron.game;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.List;
+
 public class Animation {
 	
-	private ArrayList scenes;
+	private List<Scene> scenes;
 	private int sceneIndex;
 	private long movieTime;
 	private long totalTime;
 	
 	public Animation(){
-		scenes = new ArrayList();
+		scenes = new ArrayList<>();
 		totalTime = 0;
 		start();
 	}
 	
-	public synchronized void addScene(Image i, long t){
-		totalTime += t;
-		scenes.add(new oneScene(i,totalTime));
+	public synchronized void addScene(Image image, long time){
+		totalTime += time;
+		scenes.add(new Scene(image, totalTime));
 	}
 	
 	public synchronized void start(){
@@ -39,25 +41,32 @@ public class Animation {
 	}
 	
 	public synchronized Image getImage(){
-		if(scenes.size()==0)
-		{
+		if(scenes.isEmpty()) {
 			return null;
 		}else{
-			return getScene(sceneIndex).pic;
+			return getScene(sceneIndex).getImage();
 		}
 	}
 	
-	private oneScene getScene(int x){
-		return (oneScene)scenes.get(x);
+	private Scene getScene(int x){
+		return scenes.get(x);
 	}
 	
-	private class oneScene{
-		Image pic;
-		long endTime;
+	private class Scene {
+		private Image image;
+		private long endTime;
 		
-		public oneScene(Image pic,long endTime){
-			this.pic = pic;
-			this.endTime = endTime;	
+		public Scene(Image image, long endTime){
+			this.image = image;
+			this.endTime = endTime;
+		}
+		
+		public Image getImage() {
+			return image;
+		}
+		
+		public long getEndTime() {
+			return endTime;
 		}
 	}
 }
