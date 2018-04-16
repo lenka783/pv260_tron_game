@@ -20,7 +20,16 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <configuration>
+                    <mainClass>cz.muni.pv260.tron.game.Tron</mainClass>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
-    
+
 </project>
