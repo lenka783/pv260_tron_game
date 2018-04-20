@@ -54,7 +54,7 @@ public abstract class Core {
 		long startTime = System.currentTimeMillis();
 		long cumTime = startTime;
 		
-		while (running){
+		while (running && cumTime != startTime + 300000){
 			long timePassed = System.currentTimeMillis()-cumTime;
 			cumTime+= timePassed;
 			update(timePassed);

@@ -9,22 +9,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tron extends Core implements KeyListener, MouseListener,
 		MouseMotionListener {
-	
-	private int centrex1 = 40;
-	private int centrey1 = 40;
-	private int centrex2 = 600;
-	private int centrey2 = 440;
-	private int currentDirection1 = 1;
-	private int currentDirection2 = 3;
+
+	private List<Player> players = new ArrayList<>();
+
 	private int moveAmount = 5;
-	private ArrayList<Integer> pathx1 = new ArrayList();
-	private ArrayList<Integer> pathy1 = new ArrayList();
-	private ArrayList<Integer> pathx2 = new ArrayList();
-	private ArrayList<Integer> pathy2 = new ArrayList();
-	
+	private int pathsLength;
+
 	public void init() {
 		super.init();
 		
@@ -32,6 +26,8 @@ public class Tron extends Core implements KeyListener, MouseListener,
 		window.addKeyListener(this);
 		window.addMouseListener(this);
 		window.addMouseMotionListener(this);
+
+		initPlayers();
 	}
 	
 	public static void main(String[] args) {
@@ -39,122 +35,33 @@ public class Tron extends Core implements KeyListener, MouseListener,
 	}
 	
 	public void draw(Graphics2D g) {
-		switch(currentDirection1){
-			case 0:
-				if (centrey1>0){
-					centrey1-=moveAmount;
-				} else {
-					centrey1 = sm.getHeight();
-				}
-				break;
-			case 1:
-				if (centrex1 < sm.getWidth()){
-					centrex1+=moveAmount;
-				} else {
-					centrex1 = 0;
-				}
-				break;
-			case 2:
-				if (centrey1 < sm.getHeight()){
-					centrey1+=moveAmount;
-				} else {
-					centrey1 = 0;
-				}
-				break;
-			case 3:
-				if (centrex1>0){
-					centrex1-=moveAmount;
-				} else {
-					centrex1 = sm.getWidth();
-				}
-				break;
-		}
-		switch(currentDirection2){
-			case 0:
-				if (centrey2>0){
-					centrey2-=moveAmount;
-				} else {
-					centrey2 = sm.getHeight();
-				}
-				break;
-			case 1:
-				if (centrex2 < sm.getWidth()){
-					centrex2+=moveAmount;
-				} else {
-					centrex2 = 0;
-				}
-				break;
-			case 2:
-				if (centrey2 < sm.getHeight()){
-					centrey2+=moveAmount;
-				} else {
-					centrey2 = 0;
-				}
-				break;
-			case 3:
-				if (centrex2>0){
-					centrex2-=moveAmount;
-				} else {
-					centrex2 = sm.getWidth();
-				}
-				break;
-		}
-		for (int x = 0; x < pathx1.size(); x++){
-			if (((centrex1 == pathx1.get(x)) && (centrey1 == pathy1.get(x)))
-					|| ((centrex2 == pathx2.get(x)) && (centrey2 == pathy2.get(x)))
-					|| ((centrex1 == pathx2.get(x)) && (centrey1 == pathy2.get(x)))
-					|| ((centrex2 == pathx1.get(x)) && (centrey2 == pathy1.get(x)))
-					){
-				System.exit(0);
-			}
-		}
-		pathx1.add(centrex1);
-		pathy1.add(centrey1);
-		pathx2.add(centrex2);
-		pathy2.add(centrey2);
+		movePlayers();
+		checkCollision();
+		addPathsxy();
+
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, sm.getWidth(), sm.getHeight());
-		for (int x = 0;x<pathx1.size();x++){
-			g.setColor(Color.green);
-			g.fillRect(pathx1.get(x), pathy1.get(x), 10, 10);
-			g.setColor(Color.red);
-			g.fillRect(pathx2.get(x), pathy2.get(x), 10, 10);
-		}
+		drawPlayersPaths(g);
 	}
-	
+
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			if (currentDirection1 != 2){
-				currentDirection1 = 0;
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			if (currentDirection1 != 0){
-				currentDirection1 = 2;
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (currentDirection1 != 3){
-				currentDirection1 = 1;
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if (currentDirection1 != 1){
-				currentDirection1 = 3;
-			}
-		}
-		if (e.getKeyCode() == KeyEvent.VK_W){
-			if (currentDirection2 != 2){
-				currentDirection2 = 0;
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_S) {
-			if (currentDirection2 != 0){
-				currentDirection2 = 2;
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_D) {
-			if (currentDirection2 != 3){
-				currentDirection2 = 1;
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_A) {
-			if (currentDirection2 != 1){
-				currentDirection2 = 3;
+		for (int i = 0; i < players.size(); i++) {
+			if (e.getKeyCode() == players.get(i).keyUp) {
+				if (players.get(i).getCurrentDirection() != 2){
+					players.get(i).setCurrentDirection(i);
+				}
+			} else if (e.getKeyCode() == players.get(i).keyDown) {
+				if (players.get(i).getCurrentDirection() != 0){
+					players.get(i).setCurrentDirection(2);
+				}
+			} else if (e.getKeyCode() == players.get(i).keyRight) {
+				if (players.get(i).getCurrentDirection() != 3){
+					players.get(i).setCurrentDirection(1);
+				}
+			} else if (e.getKeyCode() == players.get(i).keyLeft) {
+				if (players.get(i).getCurrentDirection() != 1){
+					players.get(i).setCurrentDirection(3);
+				}
 			}
 		}
 	}
@@ -189,5 +96,62 @@ public class Tron extends Core implements KeyListener, MouseListener,
 	
 	public void mouseMoved(MouseEvent e) {
 	
+	}
+
+	private void initPlayers(){
+		Player player1 = new Player(
+				40, 40, 1, Color.GREEN,
+				KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT
+		);
+		Player player2 = new Player(
+				600, 440, 3, Color.RED,
+				KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D
+		);
+
+		Player player3 = new Player(
+				600, 240, 3, Color.YELLOW,
+				KeyEvent.VK_U, KeyEvent.VK_J, KeyEvent.VK_K, KeyEvent.VK_H
+		);
+
+		players.add(player1);
+		players.add(player2);
+		players.add(player3);
+		updatePathsLength();
+	}
+
+	private void updatePathsLength() {
+		pathsLength = players.get(0).getPathx().size();
+	}
+
+	private void movePlayers() {
+		for (Player player : players) {
+			player.makeStep(sm, moveAmount);
+		}
+		updatePathsLength();
+	}
+
+	private void checkCollision() {
+		for (int i = 1; i < players.size(); i++) {
+			for (int x = 0; x < pathsLength; x++){
+				if (players.get(i-1).isInCollision(players.get(i), x)){
+					System.exit(0);
+				}
+			}
+		}
+	}
+
+	private void addPathsxy(){
+		for (Player player : players) {
+			player.addPathxy(player.getCentrex(), player.getCentrey());
+		}
+	}
+
+	private void drawPlayersPaths(Graphics2D graphic) {
+		for (int x = 0; x < pathsLength; x++){
+			for (Player player : players) {
+				graphic.setColor(player.getColor());
+				graphic.fillRect(player.getPathx().get(x), player.getPathy().get(x), 10, 10);
+			}
+		}
 	}
 }
