@@ -1,4 +1,4 @@
-package cz.muni.pv260.tron.game;
+package cz.muni.pv260.tron.engine;
 
 import java.awt.Image;
 import java.util.ArrayList;

@@ -1,46 +1,32 @@
 package cz.muni.pv260.tron.game;
 
+import cz.muni.pv260.tron.engine.Item;
+import cz.muni.pv260.tron.engine.ScreenManager;
+
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Player {
-    private int centrex;
-    private int centrey;
-    private int currentDirection;
-    private ArrayList<Integer> pathx = new ArrayList();
+public class Player extends Item {
+	
+    private int currentDirection; // TODO should be enum
+    private ArrayList<Integer> pathx = new ArrayList(); // TODO only one list of points
     private ArrayList<Integer> pathy = new ArrayList();
     private final Color color;
 
-    public final int keyUp;
-    public final int keyDown;
-    public final int keyLeft;
-    public final int keyRight;
+    private final int keyUp;
+	private final int keyDown;
+	private final int keyLeft;
+	private final int keyRight;
 
     public Player(int centrex, int centrey, int currentDirection, Color color, int keyUp, int keyDown, int keyLeft, int keyRight) {
-        this.centrex = centrex;
-        this.centrey = centrey;
+	    super(centrex, centrey);
         this.currentDirection = currentDirection;
         this.color = color;
         this.keyUp = keyUp;
         this.keyDown = keyDown;
         this.keyLeft = keyLeft;
         this.keyRight = keyRight;
-    }
-
-    public int getCentrex() {
-        return centrex;
-    }
-
-    public void setCentrex(int centrex) {
-        this.centrex = centrex;
-    }
-
-    public int getCentrey() {
-        return centrey;
-    }
-
-    public void setCentrey(int centrey) {
-        this.centrey = centrey;
     }
 
     public int getCurrentDirection() {
@@ -108,5 +94,27 @@ public class Player {
                 || ((that.getCentrex() == this.getPathx().get(x)) && (that.getCentrey() == this.getPathy().get(x)));
 
     }
-
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+		if (e.getKeyCode() == keyUp) {
+			if (currentDirection != 2){
+				currentDirection = 0;
+			}
+		} else if (e.getKeyCode() == keyDown) {
+			if (currentDirection != 0){
+				currentDirection = 2;
+			}
+		} else if (e.getKeyCode() == keyRight) {
+			if (currentDirection != 3){
+				currentDirection = 1;
+			}
+		} else if (e.getKeyCode() == keyLeft) {
+			if (currentDirection != 1){
+				currentDirection = 3;
+			}
+		}
+	}
+	
 }

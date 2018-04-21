@@ -1,4 +1,4 @@
-package cz.muni.pv260.tron.game;
+package cz.muni.pv260.tron.engine;
 
 import java.awt.DisplayMode;
 import java.awt.Graphics2D;
@@ -15,6 +15,18 @@ import javax.swing.JFrame;
 
 public class ScreenManager {
 	
+	private static final DisplayMode modes[] = {
+			//new DisplayMode(1920,1080,32,0),
+			new DisplayMode(1680,1050,32,0),
+			//new DisplayMode(1280,1024,32,0),
+			new DisplayMode(800,600,32,0),
+			new DisplayMode(800,600,24,0),
+			new DisplayMode(800,600,16,0),
+			new DisplayMode(640,480,32,0),
+			new DisplayMode(640,480,24,0),
+			new DisplayMode(640,480,16,0),
+	};
+	
 	private GraphicsDevice graphicsDevice;
 	
 	public ScreenManager(){
@@ -26,8 +38,7 @@ public class ScreenManager {
 		return Arrays.asList(graphicsDevice.getDisplayModes());
 	}
 	
-	public DisplayMode findFirstCompatibaleMode(DisplayMode[] modes){
-		
+	public DisplayMode findFirstCompatibaleMode(){
 		DisplayMode compatibleModes[] = graphicsDevice.getDisplayModes();
 		for(int x = 0; x < modes.length; x++){
 			for(int y = 0; y < compatibleModes.length; y++){
@@ -60,7 +71,8 @@ public class ScreenManager {
 		return true;
 	}
 	
-	public void setFullScreen(DisplayMode dm){
+	public void setFullScreen(){
+		DisplayMode dm = findFirstCompatibaleMode();
 		JFrame frame = new JFrame();
 		frame.setUndecorated(true);
 		frame.setIgnoreRepaint(true);
