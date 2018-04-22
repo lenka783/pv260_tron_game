@@ -3,19 +3,19 @@ package cz.muni.pv260.tron.game;
 import cz.muni.pv260.tron.engine.Game;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Tron extends Game {
 
-	private int moveAmount = 5;
-	private int pathsLength; // TODO should be in Player Object
-	
 	public static void main(String[] args) {
-		new Tron().run();
+		try {
+			new Tron().run();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void init() {
@@ -33,54 +33,49 @@ public class Tron extends Game {
 		return getItems(Player.class);
 	}
 	
-	public void draw(Graphics2D g) {
-		movePlayers();
-		checkCollision();
-		addPathsxy();
-
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, sm.getWidth(), sm.getHeight());
+	@Override
+	public void update(long timePassed) {
 		
-		drawPlayersPaths(g);
+		super.update(timePassed);
+		
+		checkCollision();
+		
 	}
-
-
+	
+	@Override
+	public void draw(Graphics graphics) {
+		
+		graphics.setColor(Color.BLACK);
+		graphics.fillRect(0, 0, sm.getWidth(), sm.getHeight());
+		
+		super.draw(graphics);
+	}
+	
 	private void initPlayers(){
 		Player player1 = new Player(
-				40, 40, 1, Color.GREEN,
+				40, 40, 2, Color.GREEN,
 				KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT
 		);
 		Player player2 = new Player(
-				600, 440, 3, Color.RED,
+				600, 140, 0, Color.RED,
 				KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D
 		);
 
 		Player player3 = new Player(
-				600, 240, 3, Color.YELLOW,
+				500, 240, 2, Color.YELLOW,
 				KeyEvent.VK_U, KeyEvent.VK_J, KeyEvent.VK_K, KeyEvent.VK_H
 		);
 		
 		addItem(player1);
 		addItem(player2);
 		addItem(player3);
-		updatePathsLength();
-	}
-
-	private void updatePathsLength() {
-		pathsLength = getPlayers().get(0).getPathx().size();
-	}
-
-	private void movePlayers() {
-		for (Player player : getPlayers()) {
-			player.makeStep(sm, moveAmount);
-		}
-		updatePathsLength();
 	}
 
 	private void checkCollision() {
+		// TODO should iterate over ALL touples
 		for (int i = 1; i < getItems().size(); i++) {
 			// TODO should be inside Player
-			for (int x = 0; x < pathsLength; x++){
+			for (int x = 0; x < getPlayers().get(i-1).getPathx().size()-1; x++){
 				if (getPlayers().get(i-1).isInCollision(getPlayers().get(i), x)){
 					System.exit(0);
 				}
@@ -88,21 +83,4 @@ public class Tron extends Game {
 		}
 	}
 
-	private void addPathsxy(){
-		for (Player player : getPlayers()) {
-			player.addPathxy(player.getCentrex(), player.getCentrey());
-		}
-	}
-
-	private void drawPlayersPaths(Graphics2D graphic) {
-		for (int x = 0; x < pathsLength; x++){
-			for (Player player : getPlayers()) {
-				// TODO should be inside Player
-				graphic.setColor(player.getColor());
-				graphic.fillRect(player.getPathx().get(x), player.getPathy().get(x), 10, 10);
-			}
-		}
-	}
-	
-	
 }

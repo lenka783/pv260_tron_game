@@ -1,17 +1,18 @@
 package cz.muni.pv260.tron.game;
 
 import cz.muni.pv260.tron.engine.Item;
-import cz.muni.pv260.tron.engine.ScreenManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Item {
 	
+	private int moveAmount = 5;
     private int currentDirection; // TODO should be enum
-    private ArrayList<Integer> pathx = new ArrayList(); // TODO only one list of points
-    private ArrayList<Integer> pathy = new ArrayList();
+    private List<Integer> pathx = new ArrayList<>(); // TODO only one list of points
+    private List<Integer> pathy = new ArrayList<>();
     private final Color color;
 
     private final int keyUp;
@@ -33,15 +34,11 @@ public class Player extends Item {
         return currentDirection;
     }
 
-    public void setCurrentDirection(int currentDirection) {
-        this.currentDirection = currentDirection;
-    }
-
-    public ArrayList<Integer> getPathx() {
+    public List<Integer> getPathx() {
         return pathx;
     }
 
-    public ArrayList<Integer> getPathy() {
+    public List<Integer> getPathy() {
         return pathy;
     }
 
@@ -54,24 +51,24 @@ public class Player extends Item {
         return color;
     }
 
-    public void makeStep(ScreenManager sm, int moveAmount) {
+    public void makeStep(Rectangle roomDimension) {
         switch (getCurrentDirection()) {
             case 0:
                 if (getCentrey() > 0) {
                     setCentrey(getCentrey() - moveAmount);
                 } else {
-                    setCentrey(sm.getHeight());
+                    setCentrey(((int)roomDimension.getHeight()/10)*10);
                 }
                 break;
             case 1:
-                if (getCentrex() < sm.getWidth()) {
+                if (getCentrex() < roomDimension.getWidth()) {
                     setCentrex(getCentrex() + moveAmount);
                 } else {
                     setCentrex(0);
                 }
                 break;
             case 2:
-                if (getCentrey() < sm.getHeight()) {
+                if (getCentrey() < roomDimension.getHeight()) {
                     setCentrey(getCentrey() + moveAmount);
                 } else {
                     setCentrey(0);
@@ -81,12 +78,12 @@ public class Player extends Item {
                 if (getCentrex() > 0) {
                     setCentrex(getCentrex() - moveAmount);
                 } else {
-                    setCentrex(sm.getWidth());
+                    setCentrex(((int) roomDimension.getWidth()/10)*10);
                 }
                 break;
         }
     }
-
+	   
     public boolean isInCollision(Player that, int x) {
         return ((this.getCentrex() == this.getPathx().get(x)) && (this.getCentrey() == this.getPathy().get(x)))
                 || ((that.getCentrex() == that.getPathx().get(x)) && (that.getCentrey() == that.getPathy().get(x)))
@@ -94,6 +91,24 @@ public class Player extends Item {
                 || ((that.getCentrex() == this.getPathx().get(x)) && (that.getCentrey() == this.getPathy().get(x)));
 
     }
+	
+	@Override
+	public void update(long timePassed, Rectangle roomDimension) {
+        makeStep(roomDimension);
+		addPathxy(getCentrex(), getCentrey());
+	}
+	
+	@Override
+	public void draw(Graphics graphics, Rectangle roomDimension) {
+		drawPath(graphics);
+	}
+	
+	private void drawPath(Graphics graphic) {
+		for (int x = 0; x < pathx.size(); x++){
+			graphic.setColor(color);
+			graphic.fillRect(pathx.get(x), pathy.get(x), 10, 10);
+		}
+	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {

@@ -1,10 +1,6 @@
 package cz.muni.pv260.tron.engine;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Window;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -22,10 +18,10 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 	private List<Item> items = new ArrayList<>();
 	
 	public void run(){
-		try{
+		try {
 			init();
 			gameLoop();
-		}finally{
+		} finally {
 			terminate();
 		}
 	}
@@ -39,6 +35,7 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 	}
 	
 	public <T> List<T> getItems(Class<T> clazz) {
+		// TODO Should be some kind of groups? Instead of by Class.
 		return (List<T>) items.stream().filter(clazz::isInstance).collect(Collectors.toList());
 	}
 	
@@ -57,9 +54,10 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 		long startTime = System.currentTimeMillis();
 		long cumTime = startTime;
 		
+		// TODO Add Game scheduler
 		while (running && cumTime != startTime + 300000){
 			long timePassed = System.currentTimeMillis()-cumTime;
-			cumTime+= timePassed;
+			cumTime += timePassed;
 			update(timePassed);
 			Graphics2D g = sm.getGraphics();
 			draw(g);
@@ -82,11 +80,17 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 		sm.restoreScreen();
 	}
 	
-	public void update(long timePassed){}
+	public void update(long timePassed) {
+		for (Item item : items) {
+			item.update(timePassed, new Rectangle(sm.getWidth(), sm.getHeight()));
+		}
+	}
 	
-	public abstract void draw(Graphics2D g);
-	
-	
+	public void draw(Graphics graphics) {
+		for (Item item : items) {
+			item.draw(graphics, new Rectangle(sm.getWidth(), sm.getHeight()));
+		}
+	}
 	
 	public void keyPressed(KeyEvent e) {
 		for (Item item : items) {

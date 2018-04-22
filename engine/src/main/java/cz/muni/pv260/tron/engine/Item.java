@@ -1,5 +1,6 @@
 package cz.muni.pv260.tron.engine;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -15,12 +16,15 @@ public abstract class Item implements KeyListener, MouseListener, MouseMotionLis
         this.centrex = centrex;
         this.centrey = centrey;
     }
-
+    
+    public abstract void update(long timePassed, Rectangle roomDimension);
+    public abstract void draw(Graphics graphics, Rectangle roomDimension);
+    
     public int getCentrex() {
         return centrex;
     }
 
-    public void setCentrex(int centrex) {
+    protected void setCentrex(int centrex) {
         this.centrex = centrex;
     }
 
@@ -28,7 +32,7 @@ public abstract class Item implements KeyListener, MouseListener, MouseMotionLis
         return centrey;
     }
 
-    public void setCentrey(int centrey) {
+    protected void setCentrey(int centrey) {
         this.centrey = centrey;
     }
     
