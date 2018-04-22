@@ -6,16 +6,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class Game implements KeyListener, MouseListener, MouseMotionListener {
 
 	private boolean running;
 	protected ScreenManager sm;
-	private List<Item> items = new ArrayList<>();
+	private Room room;
 	
 	public void run(){
 		try {
@@ -26,30 +22,20 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 		}
 	}
 	
-	public void addItem(Item item) {
-		items.add(item);
-	}
+	protected abstract Room initRoom(Dimension dimension);
 	
-	public List<Item> getItems() {
-		return items;
-	}
-	
-	public <T> List<T> getItems(Class<T> clazz) {
-		// TODO Should be some kind of groups? Instead of by Class.
-		return (List<T>) items.stream().filter(clazz::isInstance).collect(Collectors.toList());
+	public Room getRoom() {
+		return room;
 	}
 	
 	public void init(){
-		sm = new ScreenManager();
-		sm.setFullScreen();
-		Window window = sm.getFullScreenWindow();
-		window.setFont(new Font("Arial",Font.PLAIN,20));
-		window.setBackground(Color.WHITE);
-		window.setForeground(Color.RED);
-		window.setCursor(window.getToolkit().createCustomCursor(new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),"null"));
+		sm = new ScreenManagerImpl();
+		Window window = sm.initWindow();
 		window.addKeyListener(this);
 		window.addMouseListener(this);
 		window.addMouseMotionListener(this);
+		
+		room = initRoom(new Dimension(window.getWidth(), window.getHeight()));
 		
 		running = true;
 	}
@@ -63,9 +49,8 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 			long timePassed = System.currentTimeMillis()-cumTime;
 			cumTime += timePassed;
 			update(timePassed);
-			Graphics2D g = sm.getGraphics();
-			draw(g);
-			g.dispose();
+			
+			draw(sm.getGraphics());
 			sm.update();
 			
 			try{
@@ -81,81 +66,54 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 	}
 	
 	public void terminate(){
-		sm.restoreScreen();
+		sm.restoreWindow();
 	}
 	
 	public void update(long timePassed) {
-		for (Item item : items) {
-			item.update(timePassed, new Rectangle(sm.getWidth(), sm.getHeight()), items);
-		}
+		room.update(timePassed);
 	}
 	
 	public void draw(Graphics graphics) {
-		for (Item item : items) {
-			item.draw(graphics, new Rectangle(sm.getWidth(), sm.getHeight()));
-		}
+		room.draw(graphics);
 	}
 	
 	public void keyPressed(KeyEvent e) {
-		for (Item item : items) {
-			item.keyPressed(e);
-		}
+		room.keyPressed(e);
 	}
 	
 	public void keyReleased(KeyEvent e) {
-		for (Item item : items) {
-			item.keyReleased(e);
-		}
-		
+		room.keyReleased(e);
 	}
 	
 	public void keyTyped(KeyEvent e) {
-		for (Item item : items) {
-			item.keyTyped(e);
-		}
-		
+		room.keyTyped(e);
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		for (Item item : items) {
-			item.mouseClicked(e);
-		}
-		
+		room.mouseClicked(e);
 	}
 	
 	public void mouseEntered(MouseEvent e) {
-		for (Item item : items) {
-			item.mouseEntered(e);
-		}
+		room.mouseEntered(e);
 	}
 	
 	public void mouseExited(MouseEvent e) {
-		for (Item item : items) {
-			item.mouseExited(e);
-		}
+		room.mouseExited(e);
 	}
 	
 	public void mousePressed(MouseEvent e) {
-		for (Item item : items) {
-			item.mousePressed(e);
-		}
+		room.mousePressed(e);
 	}
 	
 	public void mouseReleased(MouseEvent e) {
-		for (Item item : items) {
-			item.mouseReleased(e);
-		}
+		room.mouseReleased(e);
 	}
 	
 	public void mouseDragged(MouseEvent e) {
-		for (Item item : items) {
-			item.mouseDragged(e);
-		}
+		room.mouseDragged(e);
 	}
 	
 	public void mouseMoved(MouseEvent e) {
-		for (Item item : items) {
-			item.mouseMoved(e);
-		}
+		room.mouseMoved(e);
 	}
 }

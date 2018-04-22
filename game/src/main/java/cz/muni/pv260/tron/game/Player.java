@@ -1,6 +1,7 @@
 package cz.muni.pv260.tron.game;
 
 import cz.muni.pv260.tron.engine.Item;
+import cz.muni.pv260.tron.engine.Room;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -43,7 +44,7 @@ public class Player extends Item {
 		return color;
 	}
 	
-	public void makeStep(Rectangle roomDimension) {
+	public void makeStep(Dimension roomDimension) {
 		switch (currentDirection) {
 			case UP:
 				if (getCenter().y > 0) {
@@ -86,10 +87,11 @@ public class Player extends Item {
 	}
 	
 	@Override
-	public void update(long timePassed, Rectangle roomDimension, List<Item> items) {
-		makeStep(roomDimension);
-		for (Item item : items) {
+	public void update(long timePassed,  Room room) {
+		makeStep(room.getDimension());
+		for (Item item : room.getItems(Player.class)) {
 			if (item.isInCollision(getCenter())) {
+				// TODO use Game.stop() ... Callback?
 				System.exit(0);
 			}
 		}
@@ -97,7 +99,7 @@ public class Player extends Item {
 	}
 	
 	@Override
-	public void draw(Graphics graphics, Rectangle roomDimension) {
+	public void draw(Graphics graphics) {
 		drawPath(graphics);
 	}
 	

@@ -6,7 +6,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.List;
 
 public abstract class Item implements KeyListener, MouseListener, MouseMotionListener {
     
@@ -16,9 +15,13 @@ public abstract class Item implements KeyListener, MouseListener, MouseMotionLis
         this.center = center;
     }
     
-    public abstract void update(long timePassed, Rectangle roomDimension, List<Item> items);
-    public abstract void draw(Graphics graphics, Rectangle roomDimension);
-	public abstract boolean isInCollision(Point point);
+    public abstract void update(long timePassed, Room room);
+    
+    // TODO add class Drawable<T extends Item>?
+    public abstract void draw(Graphics graphics);
+	
+	// TODO add class CollisionMask<T extends Item>?
+    public abstract boolean isInCollision(Point point);
     
     public Point getCenter() {
         return center;
