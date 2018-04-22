@@ -5,16 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.muni.pv260.tron</groupId>
-    <artifactId>game</artifactId>
+    <artifactId>engine</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-    <dependencies>
-        <dependency>
-            <groupId>cz.muni.pv260.tron</groupId>
-            <artifactId>engine</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
@@ -25,15 +17,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.5.0</version>
-                <configuration>
-                    <mainClass>cz.muni.pv260.tron.Tron</mainClass>
                 </configuration>
             </plugin>
 
