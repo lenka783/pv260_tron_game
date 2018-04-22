@@ -42,11 +42,15 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 	public void init(){
 		sm = new ScreenManager();
 		sm.setFullScreen();
-		Window w = sm.getFullScreenWindow();
-		w.setFont(new Font("Arial",Font.PLAIN,20));
-		w.setBackground(Color.WHITE);
-		w.setForeground(Color.RED);
-		w.setCursor(w.getToolkit().createCustomCursor(new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),"null")); 
+		Window window = sm.getFullScreenWindow();
+		window.setFont(new Font("Arial",Font.PLAIN,20));
+		window.setBackground(Color.WHITE);
+		window.setForeground(Color.RED);
+		window.setCursor(window.getToolkit().createCustomCursor(new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),"null"));
+		window.addKeyListener(this);
+		window.addMouseListener(this);
+		window.addMouseMotionListener(this);
+		
 		running = true;
 	}
 	
@@ -67,7 +71,7 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 			try{
 				Thread.sleep(20);
 			}catch(Exception ex){
-				// TODO
+				ex.printStackTrace();
 			}
 		}
 	}
@@ -82,7 +86,7 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 	
 	public void update(long timePassed) {
 		for (Item item : items) {
-			item.update(timePassed, new Rectangle(sm.getWidth(), sm.getHeight()));
+			item.update(timePassed, new Rectangle(sm.getWidth(), sm.getHeight()), items);
 		}
 	}
 	

@@ -6,36 +6,28 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.List;
 
 public abstract class Item implements KeyListener, MouseListener, MouseMotionListener {
     
-    private int centrex; // TODO point
-    private int centrey;
+    private Point center;
 
-    public Item(int centrex, int centrey) {
-        this.centrex = centrex;
-        this.centrey = centrey;
+    public Item(Point center) {
+        this.center = center;
     }
     
-    public abstract void update(long timePassed, Rectangle roomDimension);
+    public abstract void update(long timePassed, Rectangle roomDimension, List<Item> items);
     public abstract void draw(Graphics graphics, Rectangle roomDimension);
+	public abstract boolean isInCollision(Point point);
     
-    public int getCentrex() {
-        return centrex;
+    public Point getCenter() {
+        return center;
     }
 
-    protected void setCentrex(int centrex) {
-        this.centrex = centrex;
+    protected void setCenter(Point center) {
+        this.center = center;
     }
 
-    public int getCentrey() {
-        return centrey;
-    }
-
-    protected void setCentrey(int centrey) {
-        this.centrey = centrey;
-    }
-    
     @Override
     public void keyTyped(KeyEvent keyEvent) {
     

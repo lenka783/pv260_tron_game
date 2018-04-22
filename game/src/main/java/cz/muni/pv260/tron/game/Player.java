@@ -9,93 +9,91 @@ import java.util.List;
 
 public class Player extends Item {
 	
-	private int moveAmount = 5;
-    private int currentDirection; // TODO should be enum
-    private List<Integer> pathx = new ArrayList<>(); // TODO only one list of points
-    private List<Integer> pathy = new ArrayList<>();
-    private final Color color;
-
-    private final int keyUp;
+	private int speed = 5;
+	private Direction currentDirection;
+	private List<Point> path = new ArrayList<>();
+	private final Color color;
+	
+	private final int keyUp;
 	private final int keyDown;
 	private final int keyLeft;
 	private final int keyRight;
-
-    public Player(int centrex, int centrey, int currentDirection, Color color, int keyUp, int keyDown, int keyLeft, int keyRight) {
-	    super(centrex, centrey);
-        this.currentDirection = currentDirection;
-        this.color = color;
-        this.keyUp = keyUp;
-        this.keyDown = keyDown;
-        this.keyLeft = keyLeft;
-        this.keyRight = keyRight;
-    }
-
-    public int getCurrentDirection() {
-        return currentDirection;
-    }
-
-    public List<Integer> getPathx() {
-        return pathx;
-    }
-
-    public List<Integer> getPathy() {
-        return pathy;
-    }
-
-    public void addPathxy(int pahtx, int pathy) {
-        this.pathx.add(pahtx);
-        this.pathy.add(pathy);
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void makeStep(Rectangle roomDimension) {
-        switch (getCurrentDirection()) {
-            case 0:
-                if (getCentrey() > 0) {
-                    setCentrey(getCentrey() - moveAmount);
-                } else {
-                    setCentrey(((int)roomDimension.getHeight()/10)*10);
-                }
-                break;
-            case 1:
-                if (getCentrex() < roomDimension.getWidth()) {
-                    setCentrex(getCentrex() + moveAmount);
-                } else {
-                    setCentrex(0);
-                }
-                break;
-            case 2:
-                if (getCentrey() < roomDimension.getHeight()) {
-                    setCentrey(getCentrey() + moveAmount);
-                } else {
-                    setCentrey(0);
-                }
-                break;
-            case 3:
-                if (getCentrex() > 0) {
-                    setCentrex(getCentrex() - moveAmount);
-                } else {
-                    setCentrex(((int) roomDimension.getWidth()/10)*10);
-                }
-                break;
-        }
-    }
-	   
-    public boolean isInCollision(Player that, int x) {
-        return ((this.getCentrex() == this.getPathx().get(x)) && (this.getCentrey() == this.getPathy().get(x)))
-                || ((that.getCentrex() == that.getPathx().get(x)) && (that.getCentrey() == that.getPathy().get(x)))
-                || ((this.getCentrex() == that.getPathx().get(x)) && (this.getCentrey() == that.getPathy().get(x)))
-                || ((that.getCentrex() == this.getPathx().get(x)) && (that.getCentrey() == this.getPathy().get(x)));
-
-    }
+	
+	public Player(Point center, Direction currentDirection, Color color, int keyUp, int keyDown, int keyLeft, int keyRight) {
+		super(center);
+		center.x = center.x/speed*speed;
+		center.y = center.y/speed*speed;
+		this.currentDirection = currentDirection;
+		this.color = color;
+		this.keyUp = keyUp;
+		this.keyDown = keyDown;
+		this.keyLeft = keyLeft;
+		this.keyRight = keyRight;
+	}
+	
+	public Direction getCurrentDirection() {
+		return currentDirection;
+	}
+	
+	public List<Point> getPath() {
+		return path;
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+	
+	public void makeStep(Rectangle roomDimension) {
+		switch (currentDirection) {
+			case UP:
+				if (getCenter().y > 0) {
+					getCenter().y -= speed;
+				} else {
+					getCenter().y = ((int)roomDimension.getHeight()/speed)*speed;
+				}
+				break;
+			case RIGHT:
+				if (getCenter().x < roomDimension.getWidth()) {
+					getCenter().x += speed;
+				} else {
+					getCenter().x = 0;
+				}
+				break;
+			case DOWN:
+				if (getCenter().y < roomDimension.getHeight()) {
+					getCenter().y += speed;
+				} else {
+					getCenter().y = 0;
+				}
+				break;
+			case LEFT:
+				if (getCenter().x > 0) {
+					getCenter().x -= speed;
+				} else {
+					getCenter().x = ((int) roomDimension.getWidth()/speed)*speed;
+				}
+				break;
+		}
+	}
+	
+	public boolean isInCollision(Point point) {
+		for (Point pathPoint : path) {
+			if (point.equals(pathPoint)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	@Override
-	public void update(long timePassed, Rectangle roomDimension) {
-        makeStep(roomDimension);
-		addPathxy(getCentrex(), getCentrey());
+	public void update(long timePassed, Rectangle roomDimension, List<Item> items) {
+		makeStep(roomDimension);
+		for (Item item : items) {
+			if (item.isInCollision(getCenter())) {
+				System.exit(0);
+			}
+		}
+		this.path.add(new Point(getCenter()));
 	}
 	
 	@Override
@@ -104,9 +102,9 @@ public class Player extends Item {
 	}
 	
 	private void drawPath(Graphics graphic) {
-		for (int x = 0; x < pathx.size(); x++){
+		for (Point point : path) {
 			graphic.setColor(color);
-			graphic.fillRect(pathx.get(x), pathy.get(x), 10, 10);
+			graphic.fillRect(point.x, point.y, 10, 10);
 		}
 	}
 	
@@ -114,22 +112,26 @@ public class Player extends Item {
 	public void keyPressed(KeyEvent e) {
 		
 		if (e.getKeyCode() == keyUp) {
-			if (currentDirection != 2){
-				currentDirection = 0;
+			if (currentDirection != Direction.DOWN){
+				currentDirection = Direction.UP;
 			}
 		} else if (e.getKeyCode() == keyDown) {
-			if (currentDirection != 0){
-				currentDirection = 2;
+			if (currentDirection != Direction.UP){
+				currentDirection = Direction.DOWN;
 			}
 		} else if (e.getKeyCode() == keyRight) {
-			if (currentDirection != 3){
-				currentDirection = 1;
+			if (currentDirection != Direction.LEFT){
+				currentDirection = Direction.RIGHT;
 			}
 		} else if (e.getKeyCode() == keyLeft) {
-			if (currentDirection != 1){
-				currentDirection = 3;
+			if (currentDirection != Direction.RIGHT){
+				currentDirection = Direction.LEFT;
 			}
 		}
+	}
+	
+	public enum Direction {
+		UP, DOWN, LEFT, RIGHT
 	}
 	
 }

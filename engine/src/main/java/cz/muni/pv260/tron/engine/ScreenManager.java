@@ -83,7 +83,7 @@ public class ScreenManager {
 			try {
 				graphicsDevice.setDisplayMode(dm);
 			} catch(Exception ex) {
-				// TODO
+				ex.printStackTrace();
 			}
 			frame.createBufferStrategy(2);
 		}
