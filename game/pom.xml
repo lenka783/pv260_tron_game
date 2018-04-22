@@ -33,7 +33,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.5.0</version>
                 <configuration>
-                    <mainClass>cz.muni.pv260.tron.Tron</mainClass>
+                    <mainClass>cz.muni.pv260.tron.game.Tron</mainClass>
                 </configuration>
             </plugin>
 
