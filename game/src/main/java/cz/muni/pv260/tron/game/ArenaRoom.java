@@ -1,6 +1,5 @@
 package cz.muni.pv260.tron.game;
 
-import cz.muni.pv260.tron.engine.Game;
 import cz.muni.pv260.tron.engine.Room;
 
 import java.awt.*;

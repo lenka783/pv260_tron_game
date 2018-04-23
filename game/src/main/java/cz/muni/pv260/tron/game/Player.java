@@ -1,6 +1,7 @@
 package cz.muni.pv260.tron.game;
 
 import cz.muni.pv260.tron.engine.Item;
+import cz.muni.pv260.tron.engine.PointListCollisionMask;
 import cz.muni.pv260.tron.engine.Room;
 
 import java.awt.*;
@@ -77,25 +78,24 @@ public class Player extends Item {
 		}
 	}
 	
-	public boolean isInCollision(Point point) {
-		for (Point pathPoint : path) {
-			if (point.equals(pathPoint)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	@Override
 	public void update(long timePassed,  Room room) {
 		makeStep(room.getDimension());
-		for (Item item : room.getItems(Player.class)) {
-			if (item.isInCollision(getCenter())) {
-				// TODO use Game.stop() ... Callback?
-				System.exit(0);
-			}
+		List<Point> collsionMaskPoints = new ArrayList<>();
+		for (Point point : path) {
+			collsionMaskPoints.add(new Point(point.x - getCenter().x, point.y - getCenter().y));
 		}
-		this.path.add(new Point(getCenter()));
+		// TODO remove magic number 10, 10. Should be related to image size
+		this.setCollisionMask(new PointListCollisionMask(collsionMaskPoints, new Dimension(10, 10)));
+		path.add(new Point(getCenter()));
+	}
+	
+	@Override
+	public void collided(Item item) {
+		if (item instanceof Player) {
+			// TODO better handling. Should call Game.stop()
+			System.exit(0);
+		}
 	}
 	
 	@Override

@@ -6,10 +6,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class Room implements KeyListener, MouseListener, MouseMotionListener {
 	
@@ -41,8 +39,16 @@ public abstract class Room implements KeyListener, MouseListener, MouseMotionLis
 		return items;
 	}
 	
-	public <T> List<T> getItems(Class<T> clazz) {
-		return (List<T>) items.stream().filter(clazz::isInstance).collect(Collectors.toList());
+	public void evaluateCollisions() {
+		for (Item item1 : items) {
+			for (Item item2 : items) {
+				if (item1 != item2) {
+					if (item1.isInCollision(item2)) {
+						item1.collided(item2);
+					}
+				}
+			}
+		}
 	}
 	
 	public void update(long timePassed) {

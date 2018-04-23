@@ -10,18 +10,28 @@ import java.awt.event.MouseMotionListener;
 public abstract class Item implements KeyListener, MouseListener, MouseMotionListener {
     
     private Point center;
-
+    private CollisionMask collisionMask;
+    
     public Item(Point center) {
+        this(center, new EmptyCollisionMask());
+    }
+    
+    public Item(Point center, CollisionMask collisionMask) {
         this.center = center;
+        this.collisionMask = collisionMask;
     }
     
     public abstract void update(long timePassed, Room room);
     
+    public abstract void collided(Item item);
+    
     // TODO add class Drawable<T extends Item>?
     public abstract void draw(Graphics graphics);
-	
-	// TODO add class CollisionMask<T extends Item>?
-    public abstract boolean isInCollision(Point point);
+    
+    public boolean isInCollision(Item item) {
+        Point offset = new Point(item.getCenter().x - center.x, item.getCenter().y - center.y);
+        return collisionMask.isInCollision(item.getCollisionMask(), offset);
+    }
     
     public Point getCenter() {
         return center;
@@ -30,7 +40,15 @@ public abstract class Item implements KeyListener, MouseListener, MouseMotionLis
     protected void setCenter(Point center) {
         this.center = center;
     }
-
+    
+    public CollisionMask getCollisionMask() {
+        return collisionMask;
+    }
+    
+    protected void setCollisionMask(CollisionMask collisionMask) {
+        this.collisionMask = collisionMask;
+    }
+    
     @Override
     public void keyTyped(KeyEvent keyEvent) {
     
