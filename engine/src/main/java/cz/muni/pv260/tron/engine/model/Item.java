@@ -1,4 +1,4 @@
-package cz.muni.pv260.tron.engine;
+package cz.muni.pv260.tron.engine.model;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -24,9 +24,6 @@ public abstract class Item implements KeyListener, MouseListener, MouseMotionLis
     public abstract void update(long timePassed, Room room);
     
     public abstract void collided(Item item);
-    
-    // TODO add class Drawable<T extends Item>?
-    public abstract void draw(Graphics graphics);
     
     public boolean isInCollision(Item item) {
         Point offset = new Point(item.getCenter().x - center.x, item.getCenter().y - center.y);

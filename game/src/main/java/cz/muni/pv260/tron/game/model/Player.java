@@ -1,10 +1,10 @@
-package cz.muni.pv260.tron.game;
+package cz.muni.pv260.tron.game.model;
 
-import cz.muni.pv260.tron.engine.CollisionMask;
-import cz.muni.pv260.tron.engine.Item;
-import cz.muni.pv260.tron.engine.ComposedCollisionMask;
-import cz.muni.pv260.tron.engine.Room;
-import cz.muni.pv260.tron.engine.SquareCollisionMask;
+import cz.muni.pv260.tron.engine.model.CollisionMask;
+import cz.muni.pv260.tron.engine.model.Item;
+import cz.muni.pv260.tron.engine.model.ComposedCollisionMask;
+import cz.muni.pv260.tron.engine.model.Room;
+import cz.muni.pv260.tron.engine.model.SquareCollisionMask;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -19,6 +19,7 @@ public class Player extends Item {
 	private List<Point> path = new ArrayList<>();
 	private final Color color;
 	
+	// TODO Replace by some Control Object
 	private final int keyUp;
 	private final int keyDown;
 	private final int keyLeft;
@@ -88,7 +89,7 @@ public class Player extends Item {
 	}
 	
 	@Override
-	public void update(long timePassed,  Room room) {
+	public void update(long timePassed, Room room) {
 		makeStep(room.getDimension());
 		List<CollisionMask> collsionMasks = path.stream()
 				.map((point) -> new SquareCollisionMask(
@@ -105,18 +106,6 @@ public class Player extends Item {
 		if (item instanceof Player) {
 			// TODO better handling. Should call Game.stop()
 			System.exit(0);
-		}
-	}
-	
-	@Override
-	public void draw(Graphics graphics) {
-		drawPath(graphics);
-	}
-	
-	private void drawPath(Graphics graphic) {
-		for (Point point : path) {
-			graphic.setColor(color);
-			graphic.fillRect(point.x, point.y, 10, 10);
 		}
 	}
 	
