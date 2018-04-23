@@ -3,7 +3,7 @@ PV260 - 2. assignment
 
 usage:
 
-build in game subdirectory
+build in BOTH game and engine subdirectory
 ```
 mvn clean install 
 ```

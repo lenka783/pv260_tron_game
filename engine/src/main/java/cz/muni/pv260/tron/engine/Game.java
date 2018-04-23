@@ -48,7 +48,10 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 		while (running && cumTime != startTime + 300000){
 			long timePassed = System.currentTimeMillis()-cumTime;
 			cumTime += timePassed;
+			
 			update(timePassed);
+			
+			evaluateCollisions();
 			
 			draw(sm.getGraphics());
 			sm.update();
@@ -67,6 +70,10 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 	
 	public void terminate(){
 		sm.restoreWindow();
+	}
+	
+	public void evaluateCollisions() {
+		room.evaluateCollisions();
 	}
 	
 	public void update(long timePassed) {
