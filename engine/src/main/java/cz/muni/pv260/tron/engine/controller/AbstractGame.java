@@ -1,9 +1,7 @@
 package cz.muni.pv260.tron.engine.controller;
 
-import cz.muni.pv260.tron.engine.model.Room;
 import cz.muni.pv260.tron.engine.presentation.Presenter;
 
-import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 

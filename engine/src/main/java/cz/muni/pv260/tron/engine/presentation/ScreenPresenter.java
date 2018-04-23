@@ -1,6 +1,5 @@
 package cz.muni.pv260.tron.engine.presentation;
 
-
 import cz.muni.pv260.tron.engine.model.Room;
 
 import java.awt.*;
