@@ -1,4 +1,4 @@
-package cz.muni.pv260.tron.engine;
+package cz.muni.pv260.tron.engine.presentation;
 
 
 import java.awt.*;

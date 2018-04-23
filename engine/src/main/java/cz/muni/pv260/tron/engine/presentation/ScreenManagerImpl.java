@@ -1,11 +1,8 @@
-package cz.muni.pv260.tron.engine;
+package cz.muni.pv260.tron.engine.presentation;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.List;
 
 public class ScreenManagerImpl implements ScreenManager {
 	
@@ -27,7 +24,6 @@ public class ScreenManagerImpl implements ScreenManager {
 		GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		graphicsDevice = graphicsEnvironment.getDefaultScreenDevice();
 	}
-	
 	
 	@Override
 	public Window initWindow(){
@@ -117,24 +113,6 @@ public class ScreenManagerImpl implements ScreenManager {
 			return false;
 		}
 		return true;
-	}
-	
-	public int getWidth(){
-		Window window = graphicsDevice.getFullScreenWindow();
-		if(window != null){
-			return window.getWidth();
-		}else{
-			return 0;
-		}
-	}
-	
-	public int getHeight(){
-		Window window = graphicsDevice.getFullScreenWindow();
-		if(window != null){
-			return window.getHeight();
-		}else{
-			return 0;
-		}
 	}
 	
 }
