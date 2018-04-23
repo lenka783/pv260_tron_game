@@ -42,10 +42,8 @@ public abstract class Room implements KeyListener, MouseListener, MouseMotionLis
 	public void evaluateCollisions() {
 		for (Item item1 : items) {
 			for (Item item2 : items) {
-				if (item1 != item2) {
-					if (item1.isInCollision(item2)) {
-						item1.collided(item2);
-					}
+				if (item1.isInCollision(item2)) {
+					item1.collided(item2);
 				}
 			}
 		}
