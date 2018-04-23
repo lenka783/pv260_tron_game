@@ -8,6 +8,7 @@ import cz.muni.pv260.tron.engine.SquareCollisionMask;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,13 +19,14 @@ public class Player extends Item {
 	private Direction currentDirection;
 	private List<Point> path = new ArrayList<>();
 	private final Color color;
+	private final boolean mouseEnabled;
 	
 	private final int keyUp;
 	private final int keyDown;
 	private final int keyLeft;
 	private final int keyRight;
 	
-	public Player(Point center, Direction currentDirection, Color color, int keyUp, int keyDown, int keyLeft, int keyRight) {
+	public Player(Point center, Direction currentDirection, Color color, int keyUp, int keyDown, int keyLeft, int keyRight, boolean mouseEnabled) {
 		super(center);
 		center.x = center.x/speed*speed;
 		center.y = center.y/speed*speed;
@@ -34,6 +36,7 @@ public class Player extends Item {
 		this.keyDown = keyDown;
 		this.keyLeft = keyLeft;
 		this.keyRight = keyRight;
+		this.mouseEnabled = mouseEnabled;
 	}
 	
 	@Override
@@ -141,7 +144,23 @@ public class Player extends Item {
 			}
 		}
 	}
-	
+
+	@Override
+	public void mouseClicked(MouseEvent mouseEvent) {
+		if (mouseEnabled) {
+			if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+				if (currentDirection != Direction.RIGHT){
+					currentDirection = Direction.LEFT;
+				}
+			}
+			if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
+				if (currentDirection != Direction.LEFT){
+					currentDirection = Direction.RIGHT;
+				}
+			}
+		}
+	}
+
 	public enum Direction {
 		UP, DOWN, LEFT, RIGHT
 	}

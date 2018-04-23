@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c2c0445-3084-48ff-aa9d-1223da81dec1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cz/muni/pv260/snake/ArenaRoom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cz/muni/pv260/snake/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cz/muni/pv260/snake/Snake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../engine/src/main/java/cz/muni/pv260/tron/engine/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/../engine/src/main/java/cz/muni/pv260/tron/engine/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../engine/src/main/java/cz/muni/pv260/tron/engine/SquareCollisionMask.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../game/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../game/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../engine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../engine/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../game/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Snake.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Snake.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/pv260/snake/Snake.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
+            <state relative-caret-position="270">
+              <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -40,13 +36,13 @@
       <file leaf-file-name="ArenaRoom.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/pv260/snake/ArenaRoom.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="323">
               <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Player.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/pv260/snake/Player.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="301">
@@ -232,12 +228,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1524514326462</updated>
-      <workItem from="1524514328589" duration="4777000" />
+      <workItem from="1524514328589" duration="5443000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4777000" />
+    <option name="totallyTimeSpent" value="5443000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
@@ -282,9 +278,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/pv260/snake/Snake.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/pv260/snake/ArenaRoom.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
+        <state relative-caret-position="323">
           <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
         </state>
       </provider>
@@ -293,13 +296,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
           <caret line="109" column="34" selection-start-line="109" selection-start-column="34" selection-end-line="109" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/pv260/snake/Snake.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>

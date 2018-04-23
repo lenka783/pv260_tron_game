@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2c492f8-cd3e-463d-b814-e7032d87ec2a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../snake/src/main/java/cz/muni/pv260/snake/ArenaRoom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../snake/src/main/java/cz/muni/pv260/snake/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../snake/src/main/java/cz/muni/pv260/snake/Snake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/muni/pv260/tron/engine/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/muni/pv260/tron/engine/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/muni/pv260/tron/engine/SquareCollisionMask.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../game/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../game/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../game/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../game/src/main/java/cz/muni/pv260/tron/game/ArenaRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/../game/src/main/java/cz/muni/pv260/tron/game/ArenaRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../game/src/main/java/cz/muni/pv260/tron/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/../game/src/main/java/cz/muni/pv260/tron/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../snake/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../snake/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,11 +54,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/pv260/tron/engine/Game.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="96">
               <caret line="47" column="22" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Animation.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/pv260/tron/engine/Animation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-95">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -258,12 +266,12 @@
       <updated>1524430288592</updated>
       <workItem from="1524430290303" duration="264000" />
       <workItem from="1524489125550" duration="11217000" />
-      <workItem from="1524503564517" duration="4202000" />
+      <workItem from="1524503564517" duration="5121000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15683000" />
+    <option name="totallyTimeSpent" value="16602000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
@@ -278,9 +286,9 @@
       <window_info anchor="bottom" id="NativeScript" order="8" />
       <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.4983845" weight="0.32965517" />
       <window_info anchor="bottom" id="Run" order="3" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.49596122" visible="true" weight="0.32965517" />
+      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.49596122" visible="true" weight="0.32965517" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25767368" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25767368" />
       <window_info anchor="bottom" id="JProfiler" order="10" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -407,6 +415,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
           <caret line="47" column="22" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/muni/pv260/tron/engine/Animation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-95">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>

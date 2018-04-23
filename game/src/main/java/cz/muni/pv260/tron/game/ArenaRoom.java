@@ -26,28 +26,28 @@ public class ArenaRoom extends Room {
 		
 		Player player1 = new Player(
 				new Point(padding, padding), Player.Direction.RIGHT, Color.GREEN,
-				KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT
+				KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, true
 		);
 		
 		Player player2 = new Player(
 				new Point((int)dimension.getWidth() - padding, (int)dimension.getHeight() - padding),
 				Player.Direction.LEFT, Color.RED,
-				KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D
+				KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, false
 		);
 		
 		Player player3 = new Player(
 				new Point((int)dimension.getWidth() - padding, padding), Player.Direction.LEFT, Color.YELLOW,
-				KeyEvent.VK_G, KeyEvent.VK_B, KeyEvent.VK_V, KeyEvent.VK_N
+				KeyEvent.VK_G, KeyEvent.VK_B, KeyEvent.VK_V, KeyEvent.VK_N, false
 		);
 		
 		Player player4 = new Player(
 				new Point(padding, (int)dimension.getHeight() - padding), Player.Direction.RIGHT, Color.CYAN,
-				KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L
+				KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L, false
 		);
 		
 		addItem(player1);
 		addItem(player2);
-		addItem(player3);
-		addItem(player4);
+		//addItem(player3);
+		//addItem(player4);
 	}
 }
