@@ -1,4 +1,4 @@
-package cz.muni.pv260.tron.engine;
+package cz.muni.pv260.tron.engine.model;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -39,12 +39,10 @@ public abstract class Room implements KeyListener, MouseListener, MouseMotionLis
 		return items;
 	}
 	
-	public void evaluateCollisions() {
-		for (Item item1 : items) {
-			for (Item item2 : items) {
-				if (item1.isInCollision(item2)) {
-					item1.collided(item2);
-				}
+	private void evaluateCollisions(Item item) {
+		for (Item item2 : items) {
+			if (item.isInCollision(item2)) {
+				item.collided(item2);
 			}
 		}
 	}
@@ -52,14 +50,11 @@ public abstract class Room implements KeyListener, MouseListener, MouseMotionLis
 	public void update(long timePassed) {
 		for (Item item : items) {
 			item.update(timePassed, this);
+			evaluateCollisions(item);
 		}
 	}
 	
-	public void draw(Graphics graphics) {
-		for (Item item : items) {
-			item.draw(graphics);
-		}
-	}
+	public void terminate() {};
 	
 	public void keyPressed(KeyEvent e) {
 		for (Item item : items) {
@@ -123,5 +118,4 @@ public abstract class Room implements KeyListener, MouseListener, MouseMotionLis
 			item.mouseMoved(e);
 		}
 	}
-	
 }

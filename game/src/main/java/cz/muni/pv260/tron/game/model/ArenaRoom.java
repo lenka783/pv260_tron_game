@@ -1,24 +1,17 @@
-package cz.muni.pv260.tron.game;
+package cz.muni.pv260.tron.game.model;
 
-import cz.muni.pv260.tron.engine.Room;
+import cz.muni.pv260.tron.engine.model.Room;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ArenaRoom extends Room {
 	
 	public ArenaRoom(Dimension dimension) {
 		super(dimension);
 		constructPlayers(dimension);
-	}
-	
-	@Override
-	public void draw(Graphics graphics) {
-		
-		graphics.setColor(Color.BLACK);
-		graphics.fillRect(0, 0, (int) getDimension().getWidth(), (int) getDimension().getHeight());
-		
-		super.draw(graphics);
 	}
 	
 	private void constructPlayers(Dimension dimension) {
@@ -49,5 +42,13 @@ public class ArenaRoom extends Room {
 		addItem(player2);
 		//addItem(player3);
 		//addItem(player4);
+	}
+	
+	public List<Player> getPlayers() {
+
+		return getItems().stream()
+				.filter(item -> item instanceof Player)
+				.map(item -> (Player) item)
+				.collect(Collectors.toList());
 	}
 }

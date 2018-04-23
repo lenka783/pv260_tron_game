@@ -1,4 +1,6 @@
-package cz.muni.pv260.tron.engine;
+package cz.muni.pv260.tron.engine.model;
+
+import cz.muni.pv260.tron.engine.model.CollisionMask;
 
 import java.awt.*;
 import java.awt.geom.Area;
