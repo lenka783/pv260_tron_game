@@ -1,13 +1,16 @@
 package cz.muni.pv260.tron.game;
 
+import cz.muni.pv260.tron.engine.CollisionMask;
 import cz.muni.pv260.tron.engine.Item;
-import cz.muni.pv260.tron.engine.PointListCollisionMask;
+import cz.muni.pv260.tron.engine.ComposedCollisionMask;
 import cz.muni.pv260.tron.engine.Room;
+import cz.muni.pv260.tron.engine.SquareCollisionMask;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player extends Item {
 	
@@ -33,6 +36,12 @@ public class Player extends Item {
 		this.keyRight = keyRight;
 	}
 	
+	@Override
+	public boolean isInCollision(Item item) {
+		Point offset = new Point(item.getCenter().x - getCenter().x, item.getCenter().y - getCenter().y);
+		return (new SquareCollisionMask(speed-1)).isInCollision(item.getCollisionMask(), offset);
+	}
+	
 	public Direction getCurrentDirection() {
 		return currentDirection;
 	}
@@ -45,7 +54,7 @@ public class Player extends Item {
 		return color;
 	}
 	
-	public void makeStep(Dimension roomDimension) {
+	private void makeStep(Dimension roomDimension) {
 		switch (currentDirection) {
 			case UP:
 				if (getCenter().y > 0) {
@@ -81,12 +90,13 @@ public class Player extends Item {
 	@Override
 	public void update(long timePassed,  Room room) {
 		makeStep(room.getDimension());
-		List<Point> collsionMaskPoints = new ArrayList<>();
-		for (Point point : path) {
-			collsionMaskPoints.add(new Point(point.x - getCenter().x, point.y - getCenter().y));
-		}
-		// TODO remove magic number 10, 10. Should be related to image size
-		this.setCollisionMask(new PointListCollisionMask(collsionMaskPoints, new Dimension(10, 10)));
+		List<CollisionMask> collsionMasks = path.stream()
+				.map((point) -> new SquareCollisionMask(
+						speed,
+						new Point(point.x - getCenter().x, point.y - getCenter().y)
+				))
+				.collect(Collectors.toList());
+		this.setCollisionMask(new ComposedCollisionMask(collsionMasks));
 		path.add(new Point(getCenter()));
 	}
 	
