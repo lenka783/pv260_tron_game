@@ -45,7 +45,7 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
 		long cumTime = startTime;
 		
 		// TODO Add Game scheduler
-		while (running && cumTime != startTime + 300000){
+		while (running){
 			long timePassed = System.currentTimeMillis()-cumTime;
 			cumTime += timePassed;
 			
